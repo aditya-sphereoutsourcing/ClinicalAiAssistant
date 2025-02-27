@@ -225,6 +225,84 @@ export async function getRecommendations(condition: string, medications: string[
       log("No content received from OpenAI for recommendations");
       throw new Error("No response from AI");
     }
+
+export async function analyzeImage(imageUrl: string, prompt: string = "What is in this image?") {
+  try {
+    log(`Analyzing image with OpenRouter: ${imageUrl}`);
+    
+    const OPENROUTER_API_KEY = "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";
+    
+    if (!OPENROUTER_API_KEY) {
+      log("OPENROUTER_API_KEY is not set, returning mock image analysis");
+      return {
+        analysis: "This appears to be an image (mock response - OpenRouter API key not configured)",
+        confidence: 0.5
+      };
+    }
+    
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+        "HTTP-Referer": "https://replit.com", 
+        "X-Title": "CDSS Medical Image Analysis",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "model": "qwen/qwen2.5-vl-72b-instruct:free",
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": prompt
+              },
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": imageUrl
+                }
+              }
+            ]
+          }
+        ]
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      log(`OpenRouter API error: ${JSON.stringify(errorData)}`);
+      throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    const analysisText = result.choices?.[0]?.message?.content || "No analysis provided";
+    
+    log(`Image analysis complete: ${analysisText.substring(0, 100)}...`);
+    return {
+      analysis: analysisText,
+      model: result.model,
+      usage: result.usage
+    };
+  } catch (error: any) {
+    log(`Error analyzing image: ${error.message}`);
+    
+    if (error.message.includes("429")) {
+      throw new Error("API rate limit exceeded. Please try again later.");
+    } else if (error.message.includes("401")) {
+      throw new Error("Authentication error with OpenRouter API. Check your API key.");
+    } else if (error.code === 'ENOTFOUND' || error.code === 'ETIMEDOUT') {
+      throw new Error("Network error connecting to OpenRouter. Check your internet connection.");
+    }
+    
+    return {
+      analysis: "Error analyzing image",
+      error: error.message
+    };
+  }
+}
+
     const recommendations = JSON.parse(content);
     log(`Generated ${recommendations.recommendations?.length || 0} recommendations`);
     return recommendations;
