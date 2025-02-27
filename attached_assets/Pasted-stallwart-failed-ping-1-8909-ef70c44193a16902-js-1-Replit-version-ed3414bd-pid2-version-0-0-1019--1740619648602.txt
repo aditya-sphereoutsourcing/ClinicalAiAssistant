@@ -1,0 +1,151 @@
+stallwart: failed ping 1
+8909-ef70c44193a16902.js:1 Replit version ed3414bd, pid2 version 0.0.1019
+_app-5f2dbdb191923039.js:16 
+      /////////////////////
+   ///////////////////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////        Curious and driven?
+  ///////////////@@@@@@@///////        Work with us!
+  ///////////////@@@@@@@///////
+  ///////////////@@@@@@@///////        https://join.replit.com/hack.with.us
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@#//////////////
+   ///////////////////////////
+      /////////////////////
+      
+_app-5f2dbdb191923039.js:16 [LaunchDarkly] LaunchDarkly client initialized
+googleads.g.doubleclick.net/pagead/viewthroughconversion/11411994397/?random=1740619281065&cv=11&fst=1740619281065&bg=ffffff&guid=ON&async=1&gtm=45be52o0v9171242957za200&gcd=13l3l3l3l1l1&dma=0&tag_exp=101732282~101732284~102067808~102482433~102539968~102558064~102587591~102605417~102640600~102658453&u_w=1366&u_h=768&url=https%3A%2F%2Freplit.com%2F%40aditimeena324%2FClinicalAiAssistant&ref=https%3A%2F%2Freplit.com%2Flogin%3Fredirecting%3D1&hn=www.googleadservices.com&frm=0&tiba=ClinicalAiAssistant%20-%20Replit&npa=0&pscdl=noapi&auid=298228716.1740028163&fledge=1&data=event%3Dgtag.config&rfmt=3&fmt=4:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this errorAI
+ClinicalAiAssistant:1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.
+stats.g.doubleclick.net/j/collect?t=dc&aip=1&_r=3&v=1&_v=j101&tid=UA-25629695-1&cid=1943980074.1740028152&jid=461111467&gjid=1844492270&_gid=316625057.1740618180&_u=SCCAgEAjQAAAAGgCIAD~&z=499423190:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this errorAI
+stats.g.doubleclick.net/j/collect?t=dc&aip=1&_r=3&v=1&_v=j101&tid=UA-25629695-1&cid=1943980074.1740028152&jid=1612651328&gjid=1862188051&_gid=316625057.1740618180&_u=SCCAgEAjQAAAAGgCIAD~&z=1308419613:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this errorAI
+framework-56ccd84cc3469843.js:1 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+_ @ framework-56ccd84cc3469843.js:1Understand this errorAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'ambient-light-sensor'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'battery'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'execution-while-not-rendered'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'execution-while-out-of-viewport'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'layout-animations'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'legacy-image-formats'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'navigation-override'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'oversized-images'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'publickey-credentials'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'speaker-selection'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'unoptimized-images'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Unrecognized feature: 'unsized-media'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Allow attribute will take precedence over 'allowfullscreen'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+framework-56ccd84cc3469843.js:1 Allow attribute will take precedence over 'allowpaymentrequest'.
+_ @ framework-56ccd84cc3469843.js:1Understand this warningAI
+_app-5f2dbdb191923039.js:16 Invalid href 'https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev//' passed to next/router in page: '/replEnvironmentDesktop'. Repeated forward-slashes (//) or backslashes \ are not valid in the href.
+(anonymous) @ _app-5f2dbdb191923039.js:16Understand this errorAI
+_app-5f2dbdb191923039.js:16 Invalid href 'https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev//auth' passed to next/router in page: '/replEnvironmentDesktop'. Repeated forward-slashes (//) or backslashes \ are not valid in the href.
+(anonymous) @ _app-5f2dbdb191923039.js:16Understand this errorAI
+framework-56ccd84cc3469843.js:1 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+_ @ framework-56ccd84cc3469843.js:1Understand this errorAI
+stats.g.doubleclick.net/j/collect?t=dc&aip=1&_r=3&v=1&_v=j101&tid=UA-25629695-1&cid=1943980074.1740028152&jid=742152110&gjid=68480308&_gid=316625057.1740618180&_u=SCCAgEAjQAAAAGgCIAD~&z=1549494104:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this errorAI
+workspace_iframe.html:32 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.Understand this errorAI
+workspace_iframe.html:32 Unrecognized feature: 'ambient-light-sensor'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'battery'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-not-rendered'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-out-of-viewport'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'layout-animations'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'legacy-image-formats'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'navigation-override'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'oversized-images'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'publickey-credentials'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'speaker-selection'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'unoptimized-images'.Understand this warningAI
+workspace_iframe.html:32 Unrecognized feature: 'unsized-media'.Understand this warningAI
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowfullscreen'.Understand this warningAI
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowpaymentrequest'.Understand this warningAI
+_app-5f2dbdb191923039.js:16 Invalid href 'https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev//' passed to next/router in page: '/replEnvironmentDesktop'. Repeated forward-slashes (//) or backslashes \ are not valid in the href.
+(anonymous) @ _app-5f2dbdb191923039.js:16Understand this errorAI
+24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev/api/user:1 
+            
+            
+           Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this errorAI
+_app-5f2dbdb191923039.js:16 Invalid href 'https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev//auth' passed to next/router in page: '/replEnvironmentDesktop'. Repeated forward-slashes (//) or backslashes \ are not valid in the href.
+(anonymous) @ _app-5f2dbdb191923039.js:16Understand this errorAI
+24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev/api/login:1 
+            
+            
+           Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this errorAI
+Console.js:61 Warning: Cannot update a component (`Switch`) while rendering a different component (`AuthPage`). To locate the bad setState() call inside `AuthPage`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+    at AuthPage (https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev/src/pages/auth-page.tsx:31:53)
+    at Route (https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=a210bde8:323:16)
+    at Switch (https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=a210bde8:379:17)
+    at Router
+    at AuthProvider (https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev/src/hooks/use-auth.tsx:26:32)
+    at QueryClientProvider (https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=a210bde8:2805:3)
+    at App
+Mt.forEach.n.<computed> @ Console.js:61
+setTimeout
+scheduleFn @ @tanstack_react-query.js?v=a210bde8:555
+flush @ @tanstack_react-query.js?v=a210bde8:569
+batch @ @tanstack_react-query.js?v=a210bde8:587
+dispatch_fn @ @tanstack_react-query.js?v=a210bde8:996
+setData @ @tanstack_react-query.js?v=a210bde8:696
+setQueryData @ @tanstack_react-query.js?v=a210bde8:1661
+onSuccess @ use-auth.tsx:57
+execute @ @tanstack_react-query.js?v=a210bde8:1233
+await in execute
+mutate @ @tanstack_react-query.js?v=a210bde8:2630
+(anonymous) @ @tanstack_react-query.js?v=a210bde8:3295
+(anonymous) @ auth-page.tsx:110
+(anonymous) @ chunk-YABUFNLM.js?v=a210bde8:1675
+await in (anonymous)
+callCallback2 @ chunk-RPCDYKBN.js?v=a210bde8:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=a210bde8:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=a210bde8:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-RPCDYKBN.js?v=a210bde8:3736
+executeDispatch @ chunk-RPCDYKBN.js?v=a210bde8:7014
+processDispatchQueueItemsInOrder @ chunk-RPCDYKBN.js?v=a210bde8:7034
+processDispatchQueue @ chunk-RPCDYKBN.js?v=a210bde8:7043
+dispatchEventsForPlugins @ chunk-RPCDYKBN.js?v=a210bde8:7051
+(anonymous) @ chunk-RPCDYKBN.js?v=a210bde8:7174
+batchedUpdates$1 @ chunk-RPCDYKBN.js?v=a210bde8:18913
+batchedUpdates @ chunk-RPCDYKBN.js?v=a210bde8:3579
+dispatchEventForPluginEventSystem @ chunk-RPCDYKBN.js?v=a210bde8:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-RPCDYKBN.js?v=a210bde8:5478
+dispatchEvent @ chunk-RPCDYKBN.js?v=a210bde8:5472
+dispatchDiscreteEvent @ chunk-RPCDYKBN.js?v=a210bde8:5449Understand this errorAI
+_app-5f2dbdb191923039.js:16 Invalid href 'https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev//' passed to next/router in page: '/replEnvironmentDesktop'. Repeated forward-slashes (//) or backslashes \ are not valid in the href.
+(anonymous) @ _app-5f2dbdb191923039.js:16Understand this errorAI
+_app-5f2dbdb191923039.js:16 Invalid href 'https://24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev//dashboard?tab=recommendations' passed to next/router in page: '/replEnvironmentDesktop'. Repeated forward-slashes (//) or backslashes \ are not valid in the href.
+(anonymous) @ _app-5f2dbdb191923039.js:16Understand this errorAI
+24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev/api/recommendations:1 
+            
+            
+           Failed to load resource: the server responded with a status of 400 (Bad Request)Understand this errorAI
+24757573-f659-4591-8b0f-8a76c4235241-00-1sp585lrlb6g2.worf.replit.dev/api/recommendations:1 
+            
+            
+           Failed to load resource: the server responded with a status of 400 (Bad Request)Understand this errorAI
+stallwart.build.js:1 stallwart: failed ping 1
+Warning: Don’t paste code into the DevTools Console that you don’t understand or haven’t reviewed yourself. This could allow attackers to steal your identity or take control of your computer. Please type ‘allow pasting’ below and hit Enter to allow pasting.

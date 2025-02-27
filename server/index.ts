@@ -1,8 +1,12 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import cors from "cors";
 
 const app = express();
+
+// Basic middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -41,35 +45,34 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  log("Starting server initialization...");
-  const server = await registerRoutes(app);
+  try {
+    log("Starting server initialization...");
+    const server = await registerRoutes(app);
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+    // Error handling middleware
+    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+      const status = err.status || err.statusCode || 500;
+      const message = err.message || "Internal Server Error";
 
-    log(`Error occurred: ${err.stack}`);
-    res.status(status).json({ message });
-    throw err;
-  });
+      log(`Error occurred: ${err.stack}`);
+      res.status(status).json({ message });
+    });
 
-  if (app.get("env") === "development") {
-    log("Setting up Vite in development mode...");
-    await setupVite(app, server);
-  } else {
-    log("Setting up static serving in production mode...");
-    serveStatic(app);
+    if (app.get("env") === "development") {
+      log("Setting up Vite in development mode...");
+      await setupVite(app, server);
+    } else {
+      log("Setting up static serving in production mode...");
+      serveStatic(app);
+    }
+
+    const port = process.env.PORT || 5000;
+    server.listen(port, "0.0.0.0", () => {
+      log(`Server started successfully on port ${port}`);
+      log(`Server is accessible at http://0.0.0.0:${port}`);
+    });
+  } catch (err: any) {
+    log(`Fatal error during server startup: ${err.stack}`);
+    process.exit(1);
   }
-
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`Server started successfully on port ${port}`);
-  });
-})().catch(err => {
-  log(`Fatal error during server startup: ${err.stack}`);
-  process.exit(1);
-});
+})();
