@@ -1,9 +1,18 @@
-import { IStorage } from "./storage";
 import createMemoryStore from "memorystore";
 import session from "express-session";
 import { User, Patient, DrugInteraction, InsertUser } from "@shared/schema";
 
 const MemoryStore = createMemoryStore(session);
+
+export interface IStorage {
+  sessionStore: session.Store;
+  getUser(id: number): Promise<User | undefined>;
+  getUserByUsername(username: string): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
+  getPatients(): Promise<Patient[]>;
+  createPatient(patient: Omit<Patient, "id">): Promise<Patient>;
+  createDrugInteraction(interaction: Omit<DrugInteraction, "id">): Promise<DrugInteraction>;
+}
 
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
@@ -34,7 +43,7 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentId++;
-    const user = { ...insertUser, id };
+    const user: User = { ...insertUser, id, role: "doctor" };
     this.users.set(id, user);
     return user;
   }
