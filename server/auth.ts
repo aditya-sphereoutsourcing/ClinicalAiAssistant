@@ -134,3 +134,126 @@ export function setupAuth(app: Express) {
 
   log("Authentication setup completed");
 }
+import { Express } from "express";
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
+import session from "express-session";
+import { storage } from "./storage";
+import { log } from "./vite";
+import bcrypt from "bcrypt";
+
+export function setupAuth(app: Express) {
+  // Session setup
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || "medicine-ai-secret",
+      resave: false,
+      saveUninitialized: false,
+      store: storage.sessionStore,
+      cookie: {
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      },
+    })
+  );
+
+  // Initialize passport
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // Configure passport local strategy
+  passport.use(
+    new LocalStrategy(async (username, password, done) => {
+      try {
+        const user = await storage.getUserByUsername(username);
+        if (!user) {
+          return done(null, false, { message: "Incorrect username" });
+        }
+
+        // Check password with bcrypt
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+          return done(null, false, { message: "Incorrect password" });
+        }
+
+        return done(null, user);
+      } catch (error) {
+        log(`Authentication error: ${error}`);
+        return done(error);
+      }
+    })
+  );
+
+  // Serialize user to session
+  passport.serializeUser((user: any, done) => {
+    done(null, user.id);
+  });
+
+  // Deserialize user from session
+  passport.deserializeUser(async (id: number, done) => {
+    try {
+      const user = await storage.getUser(id);
+      done(null, user);
+    } catch (error) {
+      done(error);
+    }
+  });
+
+  // Authentication routes
+  app.post("/api/login", passport.authenticate("local"), (req, res) => {
+    // @ts-ignore
+    const { password, ...userWithoutPassword } = req.user;
+    res.json({ user: userWithoutPassword });
+  });
+
+  app.post("/api/register", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      
+      if (!username || !password) {
+        return res.status(400).json({ error: "Username and password are required" });
+      }
+      
+      // Check if user exists
+      const existingUser = await storage.getUserByUsername(username);
+      if (existingUser) {
+        return res.status(400).json({ error: "Username already exists" });
+      }
+      
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      // Create user
+      const user = await storage.createUser({
+        username,
+        password: hashedPassword,
+      });
+      
+      // Return user without password
+      const { password: _, ...userWithoutPassword } = user;
+      res.status(201).json({ user: userWithoutPassword });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "An unexpected error occurred" });
+      }
+    }
+  });
+
+  app.post("/api/logout", (req, res) => {
+    req.logout(() => {
+      res.sendStatus(200);
+    });
+  });
+
+  app.get("/api/session", (req, res) => {
+    if (req.isAuthenticated()) {
+      // @ts-ignore
+      const { password, ...userWithoutPassword } = req.user;
+      res.json({ user: userWithoutPassword });
+    } else {
+      res.json({ user: null });
+    }
+  });
+}

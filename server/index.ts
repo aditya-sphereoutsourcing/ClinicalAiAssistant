@@ -47,6 +47,13 @@ app.use((req, res, next) => {
 (async () => {
   try {
     log("Starting server initialization...");
+    
+    // Import the database and dummy data loader
+    const { loadDummyData } = await import("./db");
+    
+    // Load dummy data if we don't have a database connection
+    await loadDummyData();
+    
     const server = await registerRoutes(app);
 
     // Error handling middleware

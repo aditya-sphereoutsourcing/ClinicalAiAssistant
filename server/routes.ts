@@ -65,6 +65,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     }
   });
+  
+  app.get("/api/patients/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) return res.sendStatus(401);
+      
+      const patientId = parseInt(req.params.id);
+      if (isNaN(patientId)) {
+        return res.status(400).json({ error: "Invalid patient ID" });
+      }
+      
+      const patient = await storage.getPatientById(patientId);
+      if (!patient) {
+        return res.status(404).json({ error: "Patient not found" });
+      }
+      
+      res.json(patient);
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "An unexpected error occurred" });
+      }
+    }
+  });
+  
+  app.get("/api/patients/:id/history", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) return res.sendStatus(401);
+      
+      const patientId = parseInt(req.params.id);
+      if (isNaN(patientId)) {
+        return res.status(400).json({ error: "Invalid patient ID" });
+      }
+      
+      const patient = await storage.getPatientById(patientId);
+      if (!patient) {
+        return res.status(404).json({ error: "Patient not found" });
+      }
+      
+      // Get drug interactions history
+      const interactions = await storage.getPatientDrugInteractions(patientId);
+      
+      // Compile comprehensive patient history
+      const history = {
+        patientInfo: {
+          id: patient.id,
+          name: patient.name,
+          dob: patient.dob,
+        },
+        medicalHistory: patient.medicalHistory || [],
+        currentMedications: patient.medications || [],
+        ehrData: patient.ehrData || {},
+        drugInteractionHistory: interactions.map(item => ({
+          id: item.id,
+          medications: item.medications,
+          interactionsDetected: item.interactionsDetected,
+          checkedAt: item.checkedAt,
+        })),
+      };
+      
+      res.json(history);
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "An unexpected error occurred" });
+      }
+    }
+  });
 
   app.post(
     "/api/drug-interactions",
