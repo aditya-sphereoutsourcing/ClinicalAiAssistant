@@ -2,13 +2,15 @@ import OpenAI from "openai";
 import { log } from "./vite";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = process.env.OPENAI_API_KEY 
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
 export async function parseEHRData(text: string) {
   try {
     log(`Attempting to parse EHR data with text length: ${text.length}`);
     
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.OPENAI_API_KEY || !openai) {
       log("OPENAI_API_KEY is not set, returning mock EHR data");
       return {
         patientId: `P${Math.floor(Math.random() * 100000).toString().padStart(5, '0')}`,
@@ -30,7 +32,7 @@ export async function parseEHRData(text: string) {
       };
     }
     
-    const response = await openai.chat.completions.create({
+    const response = await openai!.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
@@ -96,7 +98,7 @@ export async function checkDrugInteractions(medications: string[]) {
   try {
     log(`Checking drug interactions for medications: ${medications.join(", ")}`);
     
-    if (!process.env.OPENAI_API_KEY || medications.length < 2) {
+    if (!process.env.OPENAI_API_KEY || !openai || medications.length < 2) {
       // Return mock data if no API key or only one medication
       if (medications.length < 2) {
         log("Not enough medications to check interactions");
@@ -116,7 +118,7 @@ export async function checkDrugInteractions(medications: string[]) {
       };
     }
     
-    const response = await openai.chat.completions.create({
+    const response = await openai!.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
@@ -190,7 +192,20 @@ export async function checkDrugInteractions(medications: string[]) {
 export async function getRecommendations(condition: string, medications: string[]) {
   try {
     log(`Getting recommendations for condition: ${condition}, medications: ${medications.join(", ")}`);
-    const response = await openai.chat.completions.create({
+    
+    if (!process.env.OPENAI_API_KEY || !openai) {
+      log("OPENAI_API_KEY is not set, returning mock recommendations");
+      return {
+        recommendations: [
+          "Consider lifestyle modifications such as diet and exercise",
+          "Regular monitoring of vital signs is recommended"
+        ],
+        warnings: ["This is mock data as the OpenAI API key is not configured"],
+        references: ["Mock Reference 1", "Mock Reference 2"]
+      };
+    }
+    
+    const response = await openai!.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
