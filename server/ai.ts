@@ -1,10 +1,12 @@
 import OpenAI from "openai";
+import { log } from "./vite";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function parseEHRData(text: string) {
   try {
+    log(`Attempting to parse EHR data with text length: ${text.length}`);
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -19,16 +21,24 @@ export async function parseEHRData(text: string) {
 
     const content = response.choices[0].message.content;
     if (!content) {
+      log("No content received from OpenAI for EHR parsing");
       throw new Error("No response from AI");
     }
-    return JSON.parse(content);
+    const parsedContent = JSON.parse(content);
+    log(`Successfully parsed EHR data: ${JSON.stringify(parsedContent).slice(0, 100)}...`);
+    return parsedContent;
   } catch (error: any) {
+    log(`Error parsing EHR data: ${error.message}`);
+    if (error.response?.status === 429) {
+      throw new Error("API rate limit exceeded. Please try again later.");
+    }
     throw new Error(`Failed to parse EHR data: ${error.message}`);
   }
 }
 
 export async function checkDrugInteractions(medications: string[]) {
   try {
+    log(`Checking drug interactions for medications: ${medications.join(", ")}`);
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -43,16 +53,24 @@ export async function checkDrugInteractions(medications: string[]) {
 
     const content = response.choices[0].message.content;
     if (!content) {
+      log("No content received from OpenAI for drug interactions");
       throw new Error("No response from AI");
     }
-    return JSON.parse(content);
+    const interactions = JSON.parse(content);
+    log(`Found ${interactions.interactions?.length || 0} potential drug interactions`);
+    return interactions;
   } catch (error: any) {
+    log(`Error checking drug interactions: ${error.message}`);
+    if (error.response?.status === 429) {
+      throw new Error("API rate limit exceeded. Please try again later.");
+    }
     throw new Error(`Failed to check drug interactions: ${error.message}`);
   }
 }
 
 export async function getRecommendations(condition: string, medications: string[]) {
   try {
+    log(`Getting recommendations for condition: ${condition}, medications: ${medications.join(", ")}`);
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -70,10 +88,17 @@ export async function getRecommendations(condition: string, medications: string[
 
     const content = response.choices[0].message.content;
     if (!content) {
+      log("No content received from OpenAI for recommendations");
       throw new Error("No response from AI");
     }
-    return JSON.parse(content);
+    const recommendations = JSON.parse(content);
+    log(`Generated ${recommendations.recommendations?.length || 0} recommendations`);
+    return recommendations;
   } catch (error: any) {
+    log(`Error getting recommendations: ${error.message}`);
+    if (error.response?.status === 429) {
+      throw new Error("API rate limit exceeded. Please try again later.");
+    }
     throw new Error(`Failed to get recommendations: ${error.message}`);
   }
 }
