@@ -1,3 +1,4 @@
+
 import OpenAI from "openai";
 import { log } from "./vite";
 
@@ -225,6 +226,18 @@ export async function getRecommendations(condition: string, medications: string[
       log("No content received from OpenAI for recommendations");
       throw new Error("No response from AI");
     }
+    
+    const recommendations = JSON.parse(content);
+    log(`Generated ${recommendations.recommendations?.length || 0} recommendations`);
+    return recommendations;
+  } catch (error: any) {
+    log(`Error getting recommendations: ${error.message}`);
+    if (error.response?.status === 429) {
+      throw new Error("API rate limit exceeded. Please try again later.");
+    }
+    throw new Error(`Failed to get recommendations: ${error.message}`);
+  }
+}
 
 export async function analyzeImage(imageUrl: string, prompt: string = "What is in this image?") {
   try {
@@ -300,17 +313,5 @@ export async function analyzeImage(imageUrl: string, prompt: string = "What is i
       analysis: "Error analyzing image",
       error: error.message
     };
-  }
-}
-
-    const recommendations = JSON.parse(content);
-    log(`Generated ${recommendations.recommendations?.length || 0} recommendations`);
-    return recommendations;
-  } catch (error: any) {
-    log(`Error getting recommendations: ${error.message}`);
-    if (error.response?.status === 429) {
-      throw new Error("API rate limit exceeded. Please try again later.");
-    }
-    throw new Error(`Failed to get recommendations: ${error.message}`);
   }
 }
