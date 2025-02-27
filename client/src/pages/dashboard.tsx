@@ -1,14 +1,15 @@
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect as ReactuseEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useLocation } from "wouter";
 import { ArrowLeft, Upload, AlertCircle } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 export default function Dashboard() {
   const [, setLocation] = useLocation();
@@ -63,11 +64,23 @@ export default function Dashboard() {
 }
 
 function PatientsList() {
-  const { data: patients, isLoading } = useQuery({
+  const { data: patients, isLoading, error } = useQuery({
     queryKey: ["/api/patients"],
   });
 
   if (isLoading) return <div>Loading patients...</div>;
+
+  if (error) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Error loading patients</AlertTitle>
+        <AlertDescription>
+          {error instanceof Error ? error.message : "Failed to load patients"}
+        </AlertDescription>
+      </Alert>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -96,7 +109,6 @@ function PatientsList() {
 function DrugInteractionChecker() {
   const [medications, setMedications] = useState<string[]>([]);
   const [newMed, setNewMed] = useState("");
-  const { toast } = useToast();
 
   const interactionMutation = useMutation({
     mutationFn: async (meds: string[]) => {
@@ -105,17 +117,23 @@ function DrugInteractionChecker() {
       });
       return res.json();
     },
-    onSuccess: () => {
-      toast({
-        title: "Drug interactions checked",
-        description: "Results have been updated",
-      });
-    },
   });
 
   return (
     <Card>
       <CardContent className="pt-6 space-y-4">
+        {interactionMutation.error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error checking drug interactions</AlertTitle>
+            <AlertDescription>
+              {interactionMutation.error instanceof Error 
+                ? interactionMutation.error.message 
+                : "Failed to check drug interactions"}
+            </AlertDescription>
+          </Alert>
+        )}
+
         <div className="flex gap-2">
           <Input
             value={newMed}
@@ -188,6 +206,18 @@ function TreatmentRecommendations() {
   return (
     <Card>
       <CardContent className="pt-6 space-y-4">
+        {recommendationMutation.error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error getting recommendations</AlertTitle>
+            <AlertDescription>
+              {recommendationMutation.error instanceof Error 
+                ? recommendationMutation.error.message 
+                : "Failed to get recommendations"}
+            </AlertDescription>
+          </Alert>
+        )}
+
         <Input
           value={condition}
           onChange={(e) => setCondition(e.target.value)}
@@ -266,7 +296,6 @@ function TreatmentRecommendations() {
 }
 
 function EHRUpload() {
-  const { toast } = useToast();
   const [file, setFile] = useState<File | null>(null);
   const [patientName, setPatientName] = useState("");
   const [dob, setDob] = useState("");
@@ -278,48 +307,50 @@ function EHRUpload() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/patients"] });
-      toast({
-        title: "Success",
-        description: "Patient EHR uploaded successfully",
-      });
       setFile(null);
       setPatientName("");
       setDob("");
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!file || !patientName || !dob) return;
-
-    const formData = new FormData();
-    formData.append("ehrFile", file);
-    formData.append("name", patientName);
-    formData.append("dob", dob);
-    uploadMutation.mutate(formData);
-  };
-
   return (
     <Card>
       <CardContent className="pt-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Input
-              value={patientName}
-              onChange={(e) => setPatientName(e.target.value)}
-              placeholder="Patient Name"
-              required
-            />
-          </div>
+        {uploadMutation.error && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error uploading EHR</AlertTitle>
+            <AlertDescription>
+              {uploadMutation.error instanceof Error 
+                ? uploadMutation.error.message 
+                : "Failed to upload EHR"}
+            </AlertDescription>
+          </Alert>
+        )}
 
-          <div>
-            <Input
-              type="date"
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-              required
-            />
-          </div>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          if (!file || !patientName || !dob) return;
+
+          const formData = new FormData();
+          formData.append("ehrFile", file);
+          formData.append("name", patientName);
+          formData.append("dob", dob);
+          uploadMutation.mutate(formData);
+        }} className="space-y-4">
+          <Input
+            value={patientName}
+            onChange={(e) => setPatientName(e.target.value)}
+            placeholder="Patient Name"
+            required
+          />
+
+          <Input
+            type="date"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+            required
+          />
 
           <div className="border-2 border-dashed rounded-lg p-6 text-center">
             <input
